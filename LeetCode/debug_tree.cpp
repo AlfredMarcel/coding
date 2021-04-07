@@ -27,46 +27,64 @@ struct TreeNode {
 
 class Solution {
 public:
-/*递归方法*/
 
-
-void r_inorder(TreeNode* root,vector<int>* des){
-    if(root==nullptr)return;
-    r_inorder(root->left,des);
-    des->push_back(root->val);
-    r_inorder(root->right,des);
-}
-
-/*迭代方法*/
-void d_inorder(TreeNode* root,vector<int>* des){
-    stack<TreeNode*>call;
-    if(root!=nullptr)call.push(root);
-    while(call.empty()!=true){
-
-        if(root!=nullptr){
-            call.push(root);
-            root=root->left;
-        }
-        //到底了
+void r_travel(TreeNode* root ,vector<vector<int>>* res){
+    vector<int>tmp;
+    int count=0;
+    stack<TreeNode*>left;
+    stack<TreeNode*>right;
+    if(root!=nullptr){
+        left.push(root);
+        tmp.push_back(root->val);
+        res->push_back(tmp);
+    }
+    while(true){
+        if(((count+2)%2==0&&left.empty())||((count+2)%2==1&&right.empty()))break;
         else{
-            des->push_back(call.top()->val);
-            root=call.top()->right;
-            call.pop();
+            count++;
+            tmp.clear();
+            /*left-->right*/
+            if((count+2)%2==1){
+                while(left.empty()!=true){
+                    TreeNode* t=left.top();
+                    if(t->left!=nullptr){
+                        right.push(t->left);
+                        tmp.push_back(t->val);
+                    }
+                    if(t->right!=nullptr){
+                        right.push(t->right);
+                        tmp.push_back(t->val);
+                    }
+                    left.pop();
+                }
+                res->push_back(tmp);
+            }
+            /*right-->left*/
+            else{
+                while(right.empty()!=true){
+                    TreeNode* t=right.top();
+                    if(t->right!=nullptr){
+                        left.push(t->right);
+                        tmp.insert(tmp.begin(),t->val);
+                    }
+                    if(t->left!=nullptr){
+                        left.push(t->left);
+                        tmp.insert(tmp.begin(),t->val);
+                    }
+                    right.pop();
+                }
+                res->push_back(tmp);
+            }
         }
-
     }
 
 }
 
-//中序遍历  左根右
-vector<int> inorderTraversal(TreeNode* root) {
-    vector<int>des;
-    //r_inorder(root,&des);
-    d_inorder(root,&des);
-    if(des.size()!=0)des.erase(des.begin()+des.size()-1,des.end());
-    return des;
+vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    vector<vector<int>>res;
+    r_travel(root,&res);
+    return res;
 }
-};
 
 
 TreeNode* stringToTreeNode(string input) {
@@ -134,11 +152,11 @@ int main() {
     while (getline(cin, line)) {
         TreeNode* root = stringToTreeNode(line);
         
-        vector<int> ret = Solution().inorderTraversal(root);
+        vector<vector<int>> ret = Solution().zigzagLevelOrder(root);
 
-        string out = integerVectorToString(ret);
-        cout << out << endl;
+        
     }
     return 0;
 }
 
+};
