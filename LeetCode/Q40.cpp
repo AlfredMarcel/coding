@@ -36,25 +36,23 @@ void dfs(vector<int>& candidates,int target,vector<int>& tmp,int sum,vector<vect
         for(int i=0;i<candidates.size();i++){
             //元素在tmp中，则跳过
             if(!intmp[i]){
+                if(sum+candidates[i]>target)break;
                 intmp[i]=1;
                 tmp.push_back(candidates[i]);
                 dfs(candidates,target,tmp,sum+tmp.back(),res,intmp,i);
             }
         }
         intmp[i]=0;
-        tmp.pop_back();
+        if(!tmp.empty())tmp.pop_back();
     }
-    if(sum>target){
-        intmp[i]=0;
-        tmp.pop_back();
-        return;
-    }
+
 }
 
 vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-    vector<vector<int>>res;
+    vector<vector<int>>res={};
     vector<int>tmp;
     vector<int>intmp((int)(candidates.size()),0);
+    sort(candidates.begin(),candidates.end());
     dfs(candidates,target,tmp,0,res,intmp,0);
     return res;
 }
