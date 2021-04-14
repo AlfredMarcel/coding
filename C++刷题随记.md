@@ -46,10 +46,8 @@
 - vector初始化:vector<int>a(10,3),vector<string>a(10," ")
 - 数组初始话： intA[100]={0};
 - 返回vector的最后一个元素  *vector.back()*, 和 popback 搭配使用
-- 使用vector模拟栈，很方便。
 - tmp.insert(```tmp.begin()```,1);
 - 使用vector的构造函数实现类似python的切片功能。如```vector<int>(pre.begin()+1+root_index,pre.end()```
-不如用stack
 
 
 ### 判溢出
