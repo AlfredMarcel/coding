@@ -1,8 +1,9 @@
 /*
  * @Description: 说明
  * @Author: Marcel
- * @Date: 2021-04-10 10:50:13
+ * @Date: 2021-04-13 18:00:17
  */
+
 
 #include <iostream>
 #include <vector>
@@ -25,15 +26,21 @@ void dfs(int k,int n,vector<int>& tmp,int sum,int index){
                 dfs(k,n,tmp,sum+num[i],i+1);
             }
         }
-        tmp.pop_back();
-        save[index-1]=0;
     }else{
         if(sum==n){
             res.push_back(tmp);
         }
+    }
+    if(tmp.empty()){
+        cout<<"haha"<<"\n";
+        cout<<sum<<"\n";
+        cout<<index<<"\n";
+    }
+    if(!tmp.empty()){
         tmp.pop_back();
         save[index-1]=0;
     }
+    
 }
 
 vector<vector<int>> combinationSum3(int k, int n) {
@@ -44,6 +51,5 @@ vector<vector<int>> combinationSum3(int k, int n) {
 }
 
 int main(void){
-    vector<int>a(3,0);
-    cout<<a[0]<<a[1]<<a[2];
+    combinationSum3(3,8);
 }
