@@ -12,7 +12,6 @@ using namespace std;
 int minTime(vector<int>& time, int m) {
 
     
-
 }
 
 int main(void){
