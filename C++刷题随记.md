@@ -88,3 +88,6 @@
 - 查找元素，返回下标
   include<algorithm>
   find(vec.begin(),vec.end(),10)
+
+- unique 
+  使用前要先排序，将数组重复的元素放到最后面，返回第一个重复元素的迭代器。
