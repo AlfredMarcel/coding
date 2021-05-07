@@ -1,7 +1,7 @@
 /*
  * @Description: 说明
  * @Author: Marcel
- * @Date: 2021-04-22 21:36:16
+ * @Date: 2021-05-07 21:56:02
  */
 
 #include <iostream>
@@ -11,6 +11,7 @@
 using namespace std;
 
 int n;
+long long sum=0;
 int q[100010];
 int tmp[100010];
 
@@ -20,11 +21,15 @@ void mergesort(int* q,int l,int r){
     mergesort(q,l,mid);
     mergesort(q,mid+1,r);
 
-    int k=0;
-    int i=l,j=mid+1;
+    int k=0,i=l,j=mid+1;
     while(i<=mid&&j<=r){
-        if(q[i]<q[j])tmp[k++]=q[i++];
-        else tmp[k++]=q[j++];
+        if(q[j]<q[i]){
+            tmp[k++]=q[j++];
+            /*前半部分的每个元素与后半部分提出来的最小元素，组成一组逆序*/
+            sum+=(mid-i+1);
+        }else{
+            tmp[k++]=q[i++];
+        }
     }
     while(i<=mid)tmp[k++]=q[i++];
     while(j<=r)tmp[k++]=q[j++];
@@ -32,9 +37,9 @@ void mergesort(int* q,int l,int r){
 }
 
 int main(void){
-    ios::sync_with_stdio(false);
+    ios::sync_with_stdio("false");
     cin>>n;
     for(int i=0;i<n;i++)cin>>q[i];
     mergesort(q,0,n-1);
-    for(int i=0;i<n;i++)cout<<q[i]<<" ";
+    cout<<sum;
 }
